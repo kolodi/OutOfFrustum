@@ -151,6 +151,8 @@ public class FrustumMarkers : MonoBehaviour
             var tracked = m.Key;
             var marker = m.Value;
             Vector3 nearestHit = GetNearestHit(planes, tracked.Bounds.center);
+            Debug.DrawLine(transform.position, nearestHit, Color.red);
+            Debug.DrawLine(nearestHit, tracked.Bounds.center, Color.black);
             Vector3 edgePoint = ProjectPlaneHitOnLocalRect(nearestHit);
             marker.transform.position = edgePoint;
 
@@ -158,6 +160,7 @@ public class FrustumMarkers : MonoBehaviour
 
             marker.transform.LookAt(lookAtPoint);
 
+            Debug.DrawLine(edgePoint, tracked.Bounds.center, Color.green);
         }
 
     }
