@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textAnchor: {fileID: 3078252935986576678}
+  trackedNameText: {fileID: 7134166104997112267}
 --- !u!1 &8343977817051078331
 GameObject:
   m_ObjectHideFlags: 0

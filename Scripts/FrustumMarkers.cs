@@ -56,6 +56,7 @@ public class FrustumMarkers : MonoBehaviour
     {
         var marker = Instantiate(frustumMarker, transform, false);
         markers.Add(obj, marker);
+        marker.SetMarkerData(obj.data);
         return marker;
     }
 

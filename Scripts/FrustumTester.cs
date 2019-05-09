@@ -44,7 +44,10 @@ public class FrustumTester : MonoBehaviour
     {
         var n = CreateTarget();
         spawned.Add(n);
-        frustrumTracker.AddTrackedObject(n);
+        frustrumTracker.AddTrackedObject(n, new TrackedObjectData
+        {
+            name = Time.time.ToString()
+        });
     }
 
     public void RemoveRandom()

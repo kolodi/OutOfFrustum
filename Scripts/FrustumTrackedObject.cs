@@ -15,6 +15,8 @@ public abstract class FrustumTrackedObject : MonoBehaviour
     /// </summary>
     public static event Action<FrustumTrackedObject, bool> OnVisibilityChanged = delegate { };
 
+    public TrackedObjectData data;
+
     protected bool isVisible;
     public bool IsVisible { get { return isVisible; } }
 

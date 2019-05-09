@@ -21,11 +21,21 @@ public abstract class FrustrumTrackerBase : MonoBehaviour
         CreateInitialTrackedObjects();
     }
 
-    /// <summary>
-    /// Add new object for being tracked
-    /// </summary>
-    /// <param name="obj">Object's transform</param>
-    public abstract void AddTrackedObject(Transform obj);
+    public abstract FrustumTrackedObject AddTrackedObject(Transform obj, TrackedObjectData data = null);
+
+    protected virtual T AddTrackedObject<T>(Transform obj) where T : FrustumTrackedObject
+    {
+        var ft = obj.gameObject.AddComponent<T>();
+        trackedObjects.Add(ft);
+        return ft;
+    }
+
+    protected virtual T AddTrackedObject<T>(Transform obj, TrackedObjectData data = null) where T : FrustumTrackedObject
+    {
+        var ft = AddTrackedObject<T>(obj);
+        ft.data = data;
+        return ft;
+    }
 
     /// <summary>
     /// Remove an object for being tracked

@@ -7,5 +7,8 @@ using UnityEngine;
 /// </summary>
 public class FrustumMarker : MonoBehaviour
 {
-    
+    public virtual void SetMarkerData(TrackedObjectData data)
+    {
+        Debug.Log("Nem marker created with name " + data.name);
+    }
 }

@@ -16,18 +16,13 @@ public class FrustumTrackerTransformsRoot : FrustrumTrackerBase
         RefreshAll();
     }
 
-
-    public override void AddTrackedObject(Transform objTransform)
+    public override FrustumTrackedObject AddTrackedObject(Transform obj, TrackedObjectData data = null)
     {
-        var ft = objTransform.GetOrAddComponent<FrustumTrackedTransformRoot>();
-        if (trackedObjects.Contains(ft)) return;
-        trackedObjects.Add(ft);
-        // this will trigger to display marker somewhere if the tracked object is out of frustum initially
+        var ft = base.AddTrackedObject<FrustumTrackedTransformRoot>(obj, data);
         TestTrackedObject(ft);
         ft.RefreshState();
+        return ft;
     }
-
-
 
     // Update is called once per frame
     void Update()
@@ -54,7 +49,7 @@ public class FrustumTrackerTransformsRoot : FrustrumTrackerBase
         trackedObjects = new List<FrustumTrackedObject>();
         foreach (var t in trackedObjectsOnStart)
         {
-            AddTrackedObject(t);
+            AddTrackedObject<FrustumTrackedTransformRoot>(t);
         }
     }
 

@@ -20,11 +20,9 @@ public class FrustumTrackerRenderers : FrustrumTrackerBase
         }
     }
 
-    public override void AddTrackedObject(Transform objTransform)
+    public override FrustumTrackedObject AddTrackedObject(Transform objTransform, TrackedObjectData data = null)
     {
-        var ft = objTransform.GetOrAddComponent<FrustumTrackedObjectWithRenderer>();
-        if (trackedObjects.Contains(ft)) return;
-        trackedObjects.Add(ft);
+        return AddTrackedObject<FrustumTrackedObjectWithRenderer>(objTransform, data);
     }
 
     protected override void CreateInitialTrackedObjects()
