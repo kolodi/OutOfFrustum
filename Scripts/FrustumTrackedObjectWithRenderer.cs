@@ -11,9 +11,16 @@ public class FrustumTrackedObjectWithRenderer : FrustumTrackedObject
         return GetComponent<Renderer>().isVisible;
     }
 
+    Renderer r;
+
     private void Start()
     {
-        bounds = GetComponent<Renderer>().bounds;
+        r = GetComponent<Renderer>();
+    }
+
+    protected override Bounds GetBounds()
+    {
+        return r.bounds;
     }
 
     private void OnBecameVisible()

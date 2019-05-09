@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(OutOfFrustum))]
 public class FrustumTrackerTransformsRoot : FrustrumTrackerBase
 {
-    private OutOfFrustum outOfFrustum;
+    [SerializeField] OutOfFrustum outOfFrustum;
 
     private void Start()
     {
-        outOfFrustum = GetComponent<OutOfFrustum>();
         TestAll();
         RefreshAll();
     }
@@ -35,7 +30,7 @@ public class FrustumTrackerTransformsRoot : FrustrumTrackerBase
         /// Test visibility for each of tracked objetcs using OutOfFrustum utility
         foreach (var ft in trackedObjects)
         {
-            TestTrackedObject(ft as FrustumTrackedTransformRoot);
+            TestTrackedObject(ft);
         }
     }
 
@@ -46,14 +41,13 @@ public class FrustumTrackerTransformsRoot : FrustrumTrackerBase
 
     protected override void CreateInitialTrackedObjects()
     {
-        trackedObjects = new List<FrustumTrackedObject>();
         foreach (var t in trackedObjectsOnStart)
         {
-            AddTrackedObject<FrustumTrackedTransformRoot>(t);
+            AddTrackedObject(t);
         }
     }
 
-    private void TestTrackedObject(FrustumTrackedTransformRoot obj)
+    private void TestTrackedObject(FrustumTrackedObject obj)
     {
         // TODO: find a wayt to hide this public method for a tracked object
         obj.SetVisibility(outOfFrustum.TestVisisbility(obj.Bounds));

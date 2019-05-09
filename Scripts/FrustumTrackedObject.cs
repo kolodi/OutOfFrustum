@@ -25,8 +25,9 @@ public abstract class FrustumTrackedObject : MonoBehaviour
         return isVisible;
     }
 
-    protected Bounds bounds;
-    public Bounds Bounds => bounds;
+    public Bounds Bounds => GetBounds();
+
+    protected abstract Bounds GetBounds();
 
     protected void VisibilityStateChange(bool isVisible)
     {

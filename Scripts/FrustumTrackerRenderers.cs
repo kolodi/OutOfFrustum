@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 /// <summary>
 /// Simple tracking objects manager, 
@@ -16,7 +13,6 @@ public class FrustumTrackerRenderers : FrustrumTrackerBase
         foreach (var ft in trackedObjects)
         {
             var ftwr = ft as FrustumTrackedObjectWithRenderer;
-            
         }
     }
 

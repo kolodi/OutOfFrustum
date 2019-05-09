@@ -18,6 +18,7 @@ public abstract class FrustrumTrackerBase : MonoBehaviour
 
     private void Awake()
     {
+        trackedObjects = new List<FrustumTrackedObject>();
         CreateInitialTrackedObjects();
     }
 
@@ -33,6 +34,13 @@ public abstract class FrustrumTrackerBase : MonoBehaviour
     protected virtual T AddTrackedObject<T>(Transform obj, TrackedObjectData data = null) where T : FrustumTrackedObject
     {
         var ft = AddTrackedObject<T>(obj);
+        if(data == null)
+        {
+            data = new TrackedObjectData
+            {
+                name = obj.name
+            };
+        }
         ft.data = data;
         return ft;
     }
