@@ -52,61 +52,28 @@ public class OutOfFrustum : MonoBehaviour
         Vector3 camPos = _camera.transform.position;
         Vector3 camForward = _camera.transform.forward;
 
-
-        // calculate important directions
-        Vector3 leftToUp = corners[1] - corners[0];
-        Vector3 leftToRight = corners[2] - corners[1];
-        Vector3 DownToUp = corners[3] - corners[2];
-        Vector3 LeftToRight = corners[0] - corners[3];
-
-        // calculate rectangle mid points
-        Vector3 left = corners[0] + leftToUp / 2f;
-        Vector3 up = corners[1] + leftToRight / 2f;
-        Vector3 right = corners[2] + DownToUp / 2f;
-        Vector3 down = corners[3] + LeftToRight / 2f;
-
-        // calculate normals for frustum planes https://docs.unity3d.com/ScriptReference/Vector3.Cross.html
-        Vector3 normalLeft = Vector3.Cross(camPos - left, leftToUp);
-        Vector3 normalUp = Vector3.Cross(camPos - up, leftToRight);
-        Vector3 normalRight = Vector3.Cross(camPos - right, DownToUp);
-        Vector3 normalBottom = Vector3.Cross(camPos - down, LeftToRight);
-
-        // creating 6 custom frustum planes
-        Plane planeLeft = new Plane(normalLeft, camPos);
-        Plane planeRight = new Plane(normalUp, camPos);
-        Plane planeUp = new Plane(normalRight, camPos);
-        Plane planeBottom = new Plane(normalBottom, camPos);
-        Plane planeFar = new Plane(-camForward, camPos + camForward * farPlaneDistance);
-        Plane planeNear = new Plane(camForward, camPos + camForward * _camera.nearClipPlane);
+        /// Sets a plane using three points that lie within it. 
+        /// The points go around clockwise as you look down on the top surface of the plane.
+        var planes = new Plane[]
+        {
+            new Plane(camPos, corners[1], corners[0]), // left
+            new Plane(camPos, corners[2], corners[1]), // up
+            new Plane(camPos, corners[3], corners[2]), // right
+            new Plane(camPos, corners[0], corners[3]), // down
+            new Plane(-camForward, camPos + camForward * farPlaneDistance), // far
+            new Plane(camForward, camPos + camForward * _camera.nearClipPlane), // near
+        };
 
         //debug
         {
-            // debug normals
-            Debug.DrawRay(corners[0] + leftToUp / 2f, normalLeft, Color.blue);
-            Debug.DrawRay(corners[1] + leftToRight / 2f, normalUp, Color.blue);
-            Debug.DrawRay(corners[2] + DownToUp / 2f, normalRight, Color.blue);
-            Debug.DrawRay(corners[3] + LeftToRight / 2f, normalBottom, Color.blue);
-            Debug.DrawRay(camPos + camForward * 100, -camForward, Color.blue);
-            Debug.DrawRay(camPos, camForward, Color.blue);
-
-            // debug corners
-            foreach (var corner in corners)
-            {
-                Debug.DrawLine(camPos, camPos + (corner - camPos).normalized * farPlaneDistance, Color.gray);
-            }
-
-            //debug mid points
-            Debug.DrawLine(camPos, left, Color.cyan);
-            Debug.DrawLine(camPos, up, Color.cyan);
-            Debug.DrawLine(camPos, right, Color.cyan);
-            Debug.DrawLine(camPos, down, Color.cyan);
+            //var colors = new Color[] { Color.blue, Color.red, Color.yellow, Color.green, Color.gray, Color.cyan };
+            //for (int i = 0; i < planes.Length; i++)
+            //{
+            //    Debug.DrawRay(camPos, planes[i].normal, colors[i]);
+            //}
         }
 
-
-        return new Plane[6]
-        {
-            planeLeft, planeUp, planeRight, planeBottom, planeFar, planeNear
-        };
+        return planes;
     }
 
     /// <summary>
