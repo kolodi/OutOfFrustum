@@ -61,6 +61,19 @@ public class FrustumTester : MonoBehaviour
 
         Destroy(t.gameObject);
     }
+
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            SpawnNew();
+        }
+
+        if(Input.GetMouseButtonDown(1))
+        {
+            RemoveRandom();
+        }
+    }
 }
 
 #if UNITY_EDITOR
@@ -81,6 +94,7 @@ public class FrustumTesterEditor : Editor
             ft.RemoveRandom();
         }
         GUILayout.EndHorizontal();
+        GUILayout.Label("Also press LMB to spawn and RMB to remove random cube");
     }
 }
 #endif
